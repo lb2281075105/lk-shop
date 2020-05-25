@@ -12,7 +12,7 @@
 </template>
 <script>
     export default {
-        name: 'Template',
+        name: 'Nav',
         data() {
             return {
                 msg: 'hello world!'

@@ -26,7 +26,7 @@
 </template>
 <script>
     export default {
-        name: 'Template',
+        name: 'Header',
         data() {
             return {
                 msg: 'hello world!'
