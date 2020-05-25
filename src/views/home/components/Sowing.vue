@@ -33,7 +33,7 @@
                     speed:600,
                     on:{
                         slideChangeTransitionEnd(){
-                            console.log(this.activeIndex);
+//                            console.log(this.activeIndex);
                         }
                     }
 
