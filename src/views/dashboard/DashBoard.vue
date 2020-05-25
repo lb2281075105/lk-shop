@@ -26,7 +26,11 @@
                 </template>
             </van-tabbar-item>
         </van-tabbar>
-        <router-view />
+        <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"/>
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"/>
+
     </div>
 </template>
 <script>

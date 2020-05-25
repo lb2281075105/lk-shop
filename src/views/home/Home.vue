@@ -73,6 +73,7 @@
             async requestData(){
 
                 let res = await getHomeData();
+                console.log(res);
                 if (res.success){
                     this.sowing_list = res.data.list[0].icon_list;
                     this.nav_list = res.data.list[2].icon_list;
