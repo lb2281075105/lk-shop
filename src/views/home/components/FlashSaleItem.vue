@@ -6,9 +6,9 @@
             </div>
             <div>
                 <div class="name">{{ product.name }}</div>
-                <div class="originPrice">￥{{ product.origin_price }}</div>
+                <div class="originPrice">{{ product.origin_price | moneyFormat}}</div>
                 <div class="priceWrapper">
-                    <div class="price">￥<span class="f28">{{ product.price }}</span></div>
+                    <div class="price"><span class="f28">{{ product.price | moneyFormat}}</span></div>
                     <div class="iconCartWrapper">
                         <svg viewBox="0 0 52 52" class="icon icon-60">
                             <defs>

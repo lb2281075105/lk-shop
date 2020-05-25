@@ -22,9 +22,9 @@
                     <div class="priceInfo">
                         <div class="pricePart">
                             <div class="price">
-                                ￥<span class="f34">{{ youlike.origin_price }}</span>
+                                <span class="f34">{{ youlike.origin_price | moneyFormat}}</span>
                             </div>
-                            <div class="originPrice">￥{{ youlike.price }}</div>
+                            <div class="originPrice">{{ youlike.price | moneyFormat}}</div>
                         </div>
                     </div>
                     <div class="iconCartWrapper">

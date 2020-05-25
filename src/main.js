@@ -20,6 +20,13 @@ import './plugins/vant'
 // 5.引入rem
 import '@/config/rem'
 
+// 6.引入全局过滤器
+import '@/config/filters'
+
+
+
+
+
 Vue.config.productionTip = false;
 
 new Vue({
