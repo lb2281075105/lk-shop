@@ -38,7 +38,7 @@
         name: 'DashBoard',
         data() {
             return {
-                active: 0,
+                active: Number(sessionStorage.getItem('tabBarActiveIndex')) || 0,
                 home_icon: {
                     active: require('@/images/tabbar/home_selected.png'),
                     inactive: require('@/images/tabbar/home_default.png'),
@@ -58,7 +58,14 @@
             };
         },
         methods: {},
-        components: {}
+        components: {},
+        watch:{
+            active(value){
+                let tabBarActiveIndex = value > 0 ? value : 0;
+                sessionStorage.setItem('tabBarActiveIndex',value);
+            }
+        }
+
     }
 </script>
 <style lang="less" scoped>
