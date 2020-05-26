@@ -33,6 +33,12 @@
     import BScroll from 'better-scroll'
     import {getCategories,getCategoriesDetail} from './../../service/api/index'
 
+    // 引入通知插件
+    import PubSub from 'pubsub-js'
+    import { Toast } from 'vant';
+    // 引入vuex 在methods里面进行展开mapMutations
+    import {mapMutations} from 'vuex'
+
     export default {
         name: 'Category',
         data() {
@@ -50,7 +56,28 @@
         created(){
           this.initData();
         },
+        mounted(){
+            // 订阅消息(添加到购物车的消息)
+            PubSub.subscribe('categoryAddToCart',(msg,goods)=>{
+
+                if(msg === 'categoryAddToCart'){
+                    this.ADD_GOODS({
+                        goodsId:goods.id,
+                        goodsName:goods.name,
+                        smallImage:goods.small_image,
+                        goodsPrice:goods.price
+                    });
+                    Toast({
+                        message:'添加到购物车成功',
+                        duration:800
+                    })
+                }
+
+            });
+        },
         methods: {
+            ...mapMutations(["ADD_GOODS"]),
+
             async initData(){
 
                 let leftRes = await getCategories();

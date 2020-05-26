@@ -18,15 +18,38 @@
     import FlashSale from './components/FlashSale.vue'
     import YouLike from './components/YouLike.vue'
     import MarkPage from './components/MarkPage.vue'
+    import { Toast } from 'vant';
 
     // 引入处理返回顶部的函数
     import { showBack , animate} from '@/config/global.js'
-
+    // 引入通知插件
+    import PubSub from 'pubsub-js'
+    // 引入vuex 在methods里面进行展开mapMutations
+    import {mapMutations} from 'vuex'
 
 
     import {getHomeData} from './../../service/api/index'
     export default {
         name: 'Home',
+        mounted(){
+            // 订阅消息(添加到购物车的消息)
+            PubSub.subscribe('homeAddToCart',(msg,goods)=>{
+
+                if(msg === 'homeAddToCart'){
+                    this.ADD_GOODS({
+                        goodsId:goods.id,
+                        goodsName:goods.name,
+                        smallImage:goods.small_image,
+                        goodsPrice:goods.price
+                    });
+                    Toast({
+                        message:'添加到购物车成功',
+                        duration:800
+                    })
+                }
+
+            });
+        },
         data() {
             return {
                 sowing_list:[],
@@ -68,6 +91,7 @@
 //            });
         },
         methods: {
+            ...mapMutations(["ADD_GOODS"]),
             // getHomeData 是一个promise异步的,在前面添加await变成同步的,
             // requestData添加async转化成异步的
             async requestData(){
@@ -110,6 +134,7 @@
             YouLike,
             MarkPage
         }
+
     }
 </script>
 <style lang="less" scoped>

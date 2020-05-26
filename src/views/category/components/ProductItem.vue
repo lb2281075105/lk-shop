@@ -51,6 +51,8 @@
     </div>
 </template>
 <script>
+    import PubSub from 'pubsub-js'
+
     export default {
         name: 'Template',
         props:{
@@ -61,7 +63,11 @@
                 msg: 'hello world!'
             }
         },
-        methods: {},
+        methods: {
+            addToCart(goods){
+                PubSub.publish('categoryAddToCart',goods);
+            }
+        },
         components: {}
     }
 </script>

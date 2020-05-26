@@ -13,7 +13,7 @@
                     <img :src="props.active ? category_icon.active : category_icon.inactive" />
                 </template>
             </van-tabbar-item>
-            <van-tabbar-item replace to="/dashboard/cart">
+            <van-tabbar-item replace to="/dashboard/cart" :info="goodsNum > 0 ? goodsNum : '' ">
                 <span>购物车</span>
                 <template #icon="props">
                     <img :src="props.active ? cart_icon.active : cart_icon.inactive" />
@@ -34,8 +34,29 @@
     </div>
 </template>
 <script>
+    import {mapState,mapMutations} from 'vuex'
+    // 在vuex拿到的所有的数据,状态 都需要放到computed里面
     export default {
         name: 'DashBoard',
+        computed:{
+            ...mapState(['shopCart']),
+            goodsNum(){
+                if (this.shopCart){
+                    let num = 0;
+                    Object.values(this.shopCart).forEach((value,index)=>{
+                        num += value.num;
+                    });
+                    return num
+                }
+                return 0;
+            }
+        },
+        methods: {
+            ...mapMutations(['INIT_SHOP_CART'])
+        },
+        mounted(){
+            this.INIT_SHOP_CART();
+        },
         data() {
             return {
                 active: Number(sessionStorage.getItem('tabBarActiveIndex')) || 0,
@@ -57,7 +78,6 @@
                 }
             };
         },
-        methods: {},
         components: {},
         watch:{
             active(value){

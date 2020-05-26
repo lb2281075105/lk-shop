@@ -27,7 +27,7 @@
                             <div class="originPrice">{{ youlike.price | moneyFormat}}</div>
                         </div>
                     </div>
-                    <div class="iconCartWrapper">
+                    <div class="iconCartWrapper" @click="addToCart(youlike)">
                         <svg viewBox="0 0 52 52" class="icon iconCart">
                             <defs>
                                 <radialGradient cx="27.0288363%" cy="10.3693483%" fx="27.0288363%" fy="10.3693483%" r="93.8427229%" id="radialGradient-1">
@@ -49,6 +49,8 @@
     </div>
 </template>
 <script>
+    // 引入通知插件
+    import PubSub from 'pubsub-js'
     export default {
         name: 'Template',
         props:{
@@ -59,7 +61,11 @@
                 msg: 'hello world!'
             }
         },
-        methods: {},
+        methods: {
+            addToCart(goods){
+                PubSub.publish('homeAddToCart',goods);
+            }
+        },
         components: {}
     }
 </script>
