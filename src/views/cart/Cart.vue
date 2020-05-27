@@ -382,4 +382,5 @@
         font-size: 1rem;
         color: #fff;
     }
+
 </style>
