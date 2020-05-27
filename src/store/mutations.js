@@ -91,4 +91,10 @@ export default {
         state.shopCart = {...shopCart};
     },
 
+    // 6. 清空购物车
+    [CLEAR_CART](state){
+        state.shopCart = null;
+        state.shopCart = {...state.shopCart};
+        setStore('shopCart', state.shopCart);
+    },
 }

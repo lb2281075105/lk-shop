@@ -49,7 +49,8 @@
                     </div>
                 </div>
                 <div class="tabBarRight">
-                    <a href="#" class="pay">去结算(3)</a>
+                    <!--<a href="#" class="pay"></a>-->
+                    <router-link to="/confirmOrder" class="pay" tag="a">去结算({{ goodsCount }})</router-link>
                 </div>
             </div>
         </div>
@@ -68,6 +69,16 @@
         },
         computed: {
             ...mapState(['shopCart']),
+            // 0. 选中商品的总件数
+            goodsCount(){
+                let selectedGoodsCount = 0;
+                Object.values(this.shopCart).forEach((goods, index)=>{
+                    if(goods.checked){
+                        selectedGoodsCount += 1;
+                    }
+                });
+                return selectedGoodsCount;
+            },
             // 1. 商品是否全选
             isSelectedAll(){
                 let goodsCount =  Object.values(this.shopCart).length;
@@ -91,7 +102,7 @@
             }
         },
         methods: {
-            ...mapMutations(["REDUCE_CART", "ADD_GOODS","SELECTED_SINGER_GOODS","SELECTED_All_GOODS"]),
+            ...mapMutations(["REDUCE_CART", "ADD_GOODS","SELECTED_SINGER_GOODS","SELECTED_All_GOODS","CLEAR_CART"]),
             // 1. 移出购物车
             async removeOutCart(goodsId, goodsNum){
                 if(goodsNum > 1){
@@ -167,7 +178,23 @@
 //                }
             },
             clearCart(){
-
+                Dialog.confirm({
+                    title: '小撩温馨提示',
+                    message: '确定清空所有商品吗?'
+                }).then(async () => {
+//                    let result = await clearAllCart(this.userInfo.token);
+//                    // console.log(result);
+//                    if(result.success_code === 200){ // 删除成功
+                        this.CLEAR_CART();
+//                    }else {
+//                        Toast({
+//                            message: '出了点小问题哟~',
+//                            duration: 500
+//                        });
+//                    }
+                }).catch(() => { // 点击了取消
+                    // do nothing
+                });
             }
         },
         components: {}

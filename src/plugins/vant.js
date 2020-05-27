@@ -16,3 +16,7 @@ Vue.use(Toast);
 // 3. 蒙版提示
 import { Dialog } from 'vant';
 Vue.use(Dialog);
+
+// 5.配置导航栏
+import {NavBar} from 'vant'
+Vue.use(NavBar);
