@@ -2,14 +2,15 @@ import {
     ADD_GOODS,
     INIT_SHOP_CART,
     REDUCE_CART,
-    // SELECTED_SINGER_GOODS,
-    // SELECTED_All_GOODS,
-    // CLEAR_CART,
-    // USER_INFO,
-    // INIT_USER_INFO,
-    // RESET_USER_INFO
+    SELECTED_SINGER_GOODS,
+    SELECTED_All_GOODS,
+    CLEAR_CART,
+    USER_INFO,
+    INIT_USER_INFO,
+    RESET_USER_INFO
 } from './mutations-type'
 import {getStore, removeStore, setStore} from './../config/global'
+import Vue from 'vue'
 
 export default {
 
@@ -59,7 +60,35 @@ export default {
             state.shopCart = {...shopCart};
             setStore('shopCart', state.shopCart);
         }
-    }
+    },
+    // 4. 单个商品选中和取消选中
+    [SELECTED_SINGER_GOODS](state, {goodsId}){
+        let shopCart = state.shopCart;
+        let goods = shopCart[goodsId];
+        if(goods){
+            if(goods.checked){ // 存在该属性
+                goods.checked = !goods.checked;
+            } else {
+                Vue.set(goods, 'checked', true);
+                // goods.checked = true;
+            }
+            // 4.1 同时数据
+            state.shopCart = {...shopCart};
+            setStore('shopCart', state.shopCart);
+        }
+    },
 
+    // 5. 所有商品选中和取消选中
+    [SELECTED_All_GOODS](state, {isSelected}){
+        let shopCart = state.shopCart;
+        Object.values(shopCart).forEach((goods, index)=>{
+            if(goods.checked){ // 存在该属性
+                goods.checked = !isSelected;
+            } else {
+                Vue.set(goods, 'checked', !isSelected);
+            }
+        });
+        state.shopCart = {...shopCart};
+    },
 
 }

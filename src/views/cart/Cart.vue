@@ -12,7 +12,10 @@
                 <section v-for="(goods,index) in shopCart" :key="goods.id">
                     <div class="shopCartListCon">
                         <div class="left">
-                            <a href="javascript:;" class="cartCheckBox" :checked="goods.checked"></a>
+                            <a href="javascript:;"
+                               class="cartCheckBox"
+                               :checked="goods.checked"
+                               @click.stop="singerGoodsSelected(goods.id)"></a>
                         </div>
                         <div class="center">
                             <img :src="goods.small_image" alt="">
@@ -36,10 +39,13 @@
             <!--底部通栏-->
             <div class="tabBar">
                 <div class="tabBarLeft">
-                    <a href="javascript:;" class="cartCheckBox"></a>
+                    <a href="javascript:;"
+                       class="cartCheckBox"
+                       :checked="isSelectedAll"
+                       @click.stop="selectedAll(isSelectedAll)"></a>
                     <span style="font-size: 16px;">全选</span>
                     <div class="selectAll">
-                        合计：<span class="totalPrice">199.00</span>
+                        合计：<span class="totalPrice">{{ totalPrice | moneyFormat}}</span>
                     </div>
                 </div>
                 <div class="tabBarRight">
@@ -62,9 +68,30 @@
         },
         computed: {
             ...mapState(['shopCart']),
+            // 1. 商品是否全选
+            isSelectedAll(){
+                let goodsCount =  Object.values(this.shopCart).length;
+                let tag = goodsCount > 0;
+                Object.values(this.shopCart).forEach((goods, index)=>{
+                    if(!goods.checked){
+                        tag = false;
+                    }
+                });
+                return tag;
+            },
+            // 2. 计算商品总价
+            totalPrice(){
+                let totalPrice = 0;
+                Object.values(this.shopCart).forEach((goods, index)=>{
+                    if(goods.checked){
+                        totalPrice += goods.price * goods.num;
+                    }
+                });
+                return totalPrice;
+            }
         },
         methods: {
-            ...mapMutations(["REDUCE_CART", "ADD_GOODS"]),
+            ...mapMutations(["REDUCE_CART", "ADD_GOODS","SELECTED_SINGER_GOODS","SELECTED_All_GOODS"]),
             // 1. 移出购物车
             async removeOutCart(goodsId, goodsNum){
                 if(goodsNum > 1){
@@ -124,6 +151,20 @@
                     smallImage,
                     goodsPrice
                 });
+            },
+            // 3. 单个商品选中和取消选中
+            async singerGoodsSelected(goodsId){
+//                let result = await singerGoodsSelect(this.userInfo.token, goodsId);
+//                if(result.success_code === 200){
+                    this.SELECTED_SINGER_GOODS({goodsId});
+//                }
+            },
+            // 4. 全选和取消全选
+            async selectedAll(isSelected){
+//                let result = await allGoodsSelect(this.userInfo.token, isSelected);
+//                if(result.success_code === 200){
+                    this.SELECTED_All_GOODS({isSelected});
+//                }
             },
             clearCart(){
 
