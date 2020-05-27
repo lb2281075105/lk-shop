@@ -12,3 +12,7 @@ Vue.use(Tabbar).use(TabbarItem).use(Loading).use(Image);
 // 2. 提示
 import { Toast } from 'vant';
 Vue.use(Toast);
+
+// 3. 蒙版提示
+import { Dialog } from 'vant';
+Vue.use(Dialog);

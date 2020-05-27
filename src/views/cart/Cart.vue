@@ -22,9 +22,9 @@
                             <div class="bottomContent">
                                 <p class="shopPrice">{{ goods.price | moneyFormat}}</p>
                                 <div class="shopDeal">
-                                    <span>-</span>
+                                    <span @click="removeOutCart(goods.id, goods.num)">-</span>
                                     <input disabled type="number" v-model="goods.num">
-                                    <span>+</span>
+                                    <span @click="addToCart(goods.id, goods.name, goods.small_image ,goods.price)">+</span>
                                 </div>
                             </div>
                         </div>
@@ -50,7 +50,8 @@
     </div>
 </template>
 <script>
-    import {mapState} from 'vuex'
+    import {mapState,mapMutations} from 'vuex'
+    import { Dialog, Toast } from 'vant';
 
     export default {
         name: 'Cart',
@@ -63,6 +64,67 @@
             ...mapState(['shopCart']),
         },
         methods: {
+            ...mapMutations(["REDUCE_CART", "ADD_GOODS"]),
+            // 1. 移出购物车
+            async removeOutCart(goodsId, goodsNum){
+                if(goodsNum > 1){
+//                    let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
+//                    // console.log(result);
+//                    if(result.success_code === 200){ // 修改成功
+//                        this.REDUCE_CART({goodsId});
+//                    }else {
+//                        Toast({
+//                            message: '出了点小问题哟~',
+//                            duration: 500
+//                        });
+//                    }
+                    this.REDUCE_CART({goodsId});
+                }else if(goodsNum === 1){ // 挽留
+                    Dialog.confirm({
+                        title: '小撩温馨提示',
+                        message: '确定删除该商品吗?'
+                    }).then(async ()=> {
+//                        let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
+//                        // console.log(result);
+//                        if(result.success_code === 200){ // 修改成功
+//                            this.REDUCE_CART({goodsId});
+//                        }else {
+//                            Toast({
+//                                message: '出了点小问题哟~',
+//                                duration: 500
+//                            });
+//                        }
+                        this.REDUCE_CART({goodsId});
+
+                    }).catch(() => { // 点击了取消
+                        // do nothing
+                    });
+                }
+            },
+            // 2. 增加商品
+            async addToCart(goodsId, goodsName, smallImage, goodsPrice){
+//                let result = await changeCartNum(this.userInfo.token, goodsId, 'add');
+//                // console.log(result);
+//                if(result.success_code === 200){ // 修改成功
+//                    this.ADD_GOODS({
+//                        goodsId,
+//                        goodsName,
+//                        smallImage,
+//                        goodsPrice
+//                    });
+//                }else {
+//                    Toast({
+//                        message: '出了点小问题哟~',
+//                        duration: 500
+//                    });
+//                }
+                this.ADD_GOODS({
+                    goodsId,
+                    goodsName,
+                    smallImage,
+                    goodsPrice
+                });
+            },
             clearCart(){
 
             }
