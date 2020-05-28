@@ -16,6 +16,8 @@ const MyAddress = ()=> import('./../views/order/children/MyAddress.vue');
 const AddAddress = ()=> import('./../views/order/children/children/AddAddress.vue')
 const EditAddress = ()=> import('./../views/order/children/children/EditAddress.vue')
 
+const Login = ()=> import('./../views/login/Login.vue')
+
 export default new Router({
 
     routes:[
@@ -48,6 +50,11 @@ export default new Router({
                     ]
                 }
             ]
+        },
+        {
+            path:'/login',
+            name:'login',
+            component:Login
         }
     ]
 })
