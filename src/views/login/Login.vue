@@ -222,7 +222,7 @@
             getCaptcha(){
                 // 1.获取验证码的标签
                 let captchaEle = this.$refs.captcha;
-                this.$set(captchaEle, 'src', 'http://localhost:3000/web/xlmc/api/captcha?time=' + new Date());
+                this.$set(captchaEle, 'src', 'http://demo.itlike.com/web/xlmc/api/captcha?time=' + new Date());
                 // console.log(captchaEle);
             }
         }

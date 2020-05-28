@@ -16,7 +16,7 @@
             >
                 <template slot="title">
                     <div class="personMsg">
-                        <img class="iconImage" :src="userInfo.icon_url" alt="">
+                        <img class="iconImage" src="./images/timg.jpeg" alt="">
                         <div class="personInfo">
                             <span>{{userInfo.real_name}}</span>
                             <span>手机号：{{userInfo.phone}}</span>
@@ -84,6 +84,9 @@
                     {icon: 'cash-back-record', title: '售后/退款'}
                 ]
             }
+        },
+        mounted(){
+            console.log(this.userInfo);
         },
         computed: {
             ...mapState(["userInfo"])
