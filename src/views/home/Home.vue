@@ -25,30 +25,33 @@
     // 引入通知插件
     import PubSub from 'pubsub-js'
     // 引入vuex 在methods里面进行展开mapMutations
-    import {mapMutations} from 'vuex'
+    import {mapState,mapMutations} from 'vuex'
 
 
-    import {getHomeData} from './../../service/api/index'
+    import {getHomeData,addGoodsToCart} from './../../service/api/index'
     export default {
         name: 'Home',
+        computed:{
+            ...mapState(['userInfo'])
+        },
         mounted(){
             // 订阅消息(添加到购物车的消息)
             PubSub.subscribe('homeAddToCart',(msg,goods)=>{
 
                 if(msg === 'homeAddToCart'){
-                    this.ADD_GOODS({
-                        goodsId:goods.id,
-                        goodsName:goods.name,
-                        smallImage:goods.small_image,
-                        goodsPrice:goods.price
-                    });
-                    Toast({
-                        message:'添加到购物车成功',
-                        duration:800
-                    })
+                    // 判断用户是否登录
+                    if(this.userInfo.token){ // 已经登录
+                        this.dealGoodsAdd(goods)
+                    }else { // 没有登录
+                        this.$router.push('/login');
+                    }
+
                 }
 
             });
+        },
+        beforeDestroy(){
+            PubSub.unsubscribe('homeAddToCart');
         },
         data() {
             return {
@@ -124,6 +127,25 @@
 //                console.log('滑动');
                 let documentBody = document.documentElement || document.body;
                 animate(documentBody,{'scrollTop':0},400,'ease-out');
+            },
+            // 2. 添加商品到购物车
+            async dealGoodsAdd(goods){
+                // 2.1 调用服务器端的接口
+                let result = await addGoodsToCart(this.userInfo.token, goods.id, goods.name, goods.price, goods.small_image,);
+                console.log(result);
+                if(result.success_code === 200){
+                    this.ADD_GOODS({
+                        goodsId: goods.id,
+                        goodsName: goods.name,
+                        smallImage: goods.small_image,
+                        goodsPrice: goods.price
+                    });
+                    // 提示用户
+                    Toast({
+                        message: '添加到购物车成功！',
+                        duration: 800
+                    });
+                }
             }
         },
         components: {

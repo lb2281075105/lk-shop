@@ -34,7 +34,7 @@
     </div>
 </template>
 <script>
-    import {mapState,mapMutations} from 'vuex'
+    import {mapState,mapMutations,mapActions} from 'vuex'
     // 在vuex拿到的所有的数据,状态 都需要放到computed里面
     export default {
         name: 'DashBoard',
@@ -52,9 +52,12 @@
             }
         },
         methods: {
-            ...mapMutations(['INIT_SHOP_CART'])
+            ...mapMutations(['INIT_SHOP_CART']),
+            ...mapActions(['reqUserInfo']),
+
         },
         mounted(){
+            this.reqUserInfo();
             this.INIT_SHOP_CART();
         },
         data() {

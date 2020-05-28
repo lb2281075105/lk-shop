@@ -75,6 +75,9 @@
 
             });
         },
+        beforeDestroy(){
+            PubSub.unsubscribe('categoryAddToCart');
+        },
         methods: {
             ...mapMutations(["ADD_GOODS"]),
 
