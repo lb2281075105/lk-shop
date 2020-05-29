@@ -50,7 +50,7 @@
                 </div>
                 <div class="tabBarRight">
                     <!--<a href="#" class="pay"></a>-->
-                    <router-link to="/confirmOrder" class="pay" tag="a">去结算({{ goodsCount }})</router-link>
+                    <button class="pay" @click="toPay">去结算({{goodsCount}})</button>
                 </div>
             </div>
         </div>

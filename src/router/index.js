@@ -13,6 +13,7 @@ const Mine = ()=> import('./../views/mine/Mine.vue');
 const UserCenter = ()=> import('./../views/mine/children/UserCenter.vue');
 
 const Order = ()=> import('./../views/order/Order.vue');
+const OrderDetail = ()=> import('./../views/order/children/OrderDetail.vue');
 const MyAddress = ()=> import('./../views/order/children/MyAddress.vue');
 const AddAddress = ()=> import('./../views/order/children/children/AddAddress.vue')
 const EditAddress = ()=> import('./../views/order/children/children/EditAddress.vue')
@@ -53,6 +54,11 @@ export default new Router({
                         {path:'editAddress',name:'editAddress',component:EditAddress}
 
                     ]
+                },
+                {
+                    path: 'orderDetail',
+                    name: 'orderDetail',
+                    component: OrderDetail
                 }
             ]
         },
