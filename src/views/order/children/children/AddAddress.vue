@@ -23,37 +23,63 @@
 </template>
 <script>
     import { Toast } from 'vant';
+    import areaList from './../../../../config/area'
+    import {addUserAddress} from './../../../../service/api/index'
+    import {mapState} from 'vuex'
+    import PubSub from 'pubsub-js'
 
     export default {
         name: 'Template',
         data() {
             return {
-                areaList,
-                searchResult: [],
+                areaList: areaList,
+                searchResult: []
             }
         },
+        computed: {
+            ...mapState(['userInfo'])
+        },
         methods: {
-            onClickLeft(){
-                this.$router.back();
+            onClickLeft() {
+                this.$router.go(-1);
             },
-            onSave() {
-                Toast('save');
-            },
+            // 保存
+            async onSave(content) {
+                console.log(content,this.userInfo.token);
+                if(this.userInfo.token){
+                    let result = await addUserAddress(this.userInfo.token, content.name, content.tel, content.province+content.city+content.county, content.addressDetail, content.postalCode, content.isDefault, content.province, content.city, content.county, content.areaCode);
+                    console.log(result);
+                    // 判断
+                    if(result.success_code === 200){ // 成功
+                        Toast({
+                            message: '添加地址成功！',
+                            duration: 400
+                        });
+                        // 回去
+                        this.$router.back();
+                        // 发起通知
+                        PubSub.publish('backToMyAddress');
+                    }else {
+                        Toast({
+                            message: '添加地址失败！',
+                            duration: 400
+                        });
+                    }
 
+                }
+            },
             onChangeDetail(val) {
                 if (val) {
-                    this.searchResult = [
-                        {
-                            name: '黄龙万科中心',
-                            address: '杭州市西湖区',
-                        },
-                    ];
+                    this.searchResult = [{
+                        name: '黄龙万科中心',
+                        address: '杭州市西湖区'
+                    }];
                 } else {
                     this.searchResult = [];
                 }
             }
-        },
-        components: {}
+        }
+
     }
 </script>
 <style scoped>

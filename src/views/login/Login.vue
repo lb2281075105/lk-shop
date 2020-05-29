@@ -152,8 +152,10 @@
                     // 3.1.2 手机验证码登录
                     let result = await phoneCodeLogin(this.phone, this.code);
                     console.log(result);
-                    result = {'token':'dfafafaaa','phone':'15550171520','real_name':'小撩','success_code':200};
+                    result = {'token':'5d555430de157535940c0131','phone':'15550171520','real_name':'小撩','success_code':200};
                     console.log(this.phone);
+//                    "5d54bdb921f43c5540ba5150"
+//                     5d555430de157535940c0131
                     console.log(this.code);
                     // 4.1 保存用户信息
                     this.syncUserInfo(result);
@@ -194,8 +196,8 @@
                     }
                     // 3.2.1 发起请求
                     let result = await pwdLogin(this.user_name, this.pwd, this.captcha);
-                    // console.log(result);
-                    result = {'token':'dfafafaaa','phone':'15550171520','real_name':'小撩','success_code':200};
+                     console.log(result);
+                    result = {'token':'5d555430de157535940c0131','phone':'15550171520','real_name':'小撩','success_code':200};
 
                     // 4.1 保存用户信息
                     this.syncUserInfo(result);

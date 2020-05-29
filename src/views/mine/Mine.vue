@@ -16,7 +16,7 @@
             >
                 <template slot="title">
                     <div class="personMsg">
-                        <img class="iconImage" src="./images/timg.jpeg" alt="">
+                        <img class="iconImage" :src="userInfo.icon_url" alt="">
                         <div class="personInfo">
                             <span>{{userInfo.real_name}}</span>
                             <span>手机号：{{userInfo.phone}}</span>
@@ -108,9 +108,9 @@
         background-color: #3bba63;
     }
 
-    .van-nav-bar__title {
-        color: #fff;
+    .van-nav-bar__title{
         font-size: 1rem;
+        color: #ffffff;
     }
 
     .personMsg {
@@ -136,6 +136,7 @@
         color: orangered;
         font-size: 1.2rem;
     }
+
 
     /*转场动画*/
     .router-slider-enter-active, .router-slider-leave-active{

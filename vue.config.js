@@ -3,7 +3,7 @@ module.exports = {
     devServer: {
         proxy: {
             '/api': {
-                target: 'http://localhost:3000/web/xlmc',
+                target: 'http://demo.itlike.com/web/xlmc',
                 changeOrigin: true,
                 pathRewrite: {
                     '^/api': ''

@@ -18,8 +18,8 @@ export const getCategoriesDetail = (preParams) => ajax(BASE_URL + '/api/homeApi/
 
 // 2. 用户中心接口
 //  http://localhost:3000/web/xlmc/api/send_code
-// const LOCAL_BASE_URL = 'http://localhost:3000/web/xlmc';
-const LOCAL_BASE_URL = '/api';
+const LOCAL_BASE_URL = 'http://demo.itlike.com/web/xlmc';
+// const LOCAL_BASE_URL = '/api';
 
 // 2.1 获取短信验证码(GET)
 export const getPhoneCode = (phone) => ajax(LOCAL_BASE_URL + '/api/send_code', {phone});
