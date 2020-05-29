@@ -34,31 +34,62 @@
     </div>
 </template>
 <script>
+    import {getGoodsCart} from './../../service/api/index'
+    import {setStore} from './../../config/global'
     import {mapState,mapMutations,mapActions} from 'vuex'
     // 在vuex拿到的所有的数据,状态 都需要放到computed里面
     export default {
         name: 'DashBoard',
         computed:{
-            ...mapState(['shopCart']),
+            ...mapState(['shopCart', 'userInfo']),
             goodsNum(){
-                if (this.shopCart){
+                if(this.shopCart){
+                    // 总的购物车商品数量
                     let num = 0;
-                    Object.values(this.shopCart).forEach((value,index)=>{
-                        num += value.num;
+                    // console.log(Object.values(this.shopCart));
+                    Object.values(this.shopCart).forEach((goods, index)=>{
+                        num += goods.num;
                     });
-                    return num
+                    return num;
+                }else {
+                    return 0;
                 }
-                return 0;
             }
         },
         methods: {
             ...mapMutations(['INIT_SHOP_CART']),
             ...mapActions(['reqUserInfo']),
-
+            async initShopCart(){
+                if(this.userInfo.token){ // 已经登录
+                    // 1. 获取当前用户购物车中的商品(服务器端)
+                    let result = await getGoodsCart(this.userInfo.token);
+                    console.log(result);
+                    // 2. 如果获取成功
+                    if(result.success_code === 200){
+                        let cartArr = result.data;
+                        let shopCart = {};
+                        // 2.1 遍历
+                        cartArr.forEach((value)=>{
+                            shopCart[value.goods_id] = {
+                                "num": value.num,
+                                "id": value.goods_id,
+                                "name": value.goods_name,
+                                "small_image": value.small_image,
+                                "price": value.goods_price,
+                                "checked": value.checked
+                            }
+                        });
+                        // 2.2 本地数据同步
+                        setStore('shopCart', shopCart);
+                        this.INIT_SHOP_CART()
+                    }
+                }
+            }
         },
         mounted(){
             this.reqUserInfo();
-            this.INIT_SHOP_CART();
+            // 2. 获取购物车的数据
+            this.initShopCart();
         },
         data() {
             return {
@@ -83,9 +114,12 @@
         },
         components: {},
         watch:{
+
             active(value){
+                // console.log(value);
                 let tabBarActiveIndex = value > 0 ? value : 0;
-                sessionStorage.setItem('tabBarActiveIndex',value);
+                // 缓存到本地
+                sessionStorage.setItem('tabBarActiveIndex', value);
             }
         }
 

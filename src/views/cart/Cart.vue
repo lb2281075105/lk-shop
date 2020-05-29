@@ -108,33 +108,31 @@
             // 1. 移出购物车
             async removeOutCart(goodsId, goodsNum){
                 if(goodsNum > 1){
-//                    let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
-//                    // console.log(result);
-//                    if(result.success_code === 200){ // 修改成功
-//                        this.REDUCE_CART({goodsId});
-//                    }else {
-//                        Toast({
-//                            message: '出了点小问题哟~',
-//                            duration: 500
-//                        });
-//                    }
-                    this.REDUCE_CART({goodsId});
+                    let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
+                    // console.log(result);
+                    if(result.success_code === 200){ // 修改成功
+                        this.REDUCE_CART({goodsId});
+                    }else {
+                        Toast({
+                            message: '出了点小问题哟~',
+                            duration: 500
+                        });
+                    }
                 }else if(goodsNum === 1){ // 挽留
                     Dialog.confirm({
                         title: '小撩温馨提示',
                         message: '确定删除该商品吗?'
                     }).then(async ()=> {
-//                        let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
-//                        // console.log(result);
-//                        if(result.success_code === 200){ // 修改成功
-//                            this.REDUCE_CART({goodsId});
-//                        }else {
-//                            Toast({
-//                                message: '出了点小问题哟~',
-//                                duration: 500
-//                            });
-//                        }
-                        this.REDUCE_CART({goodsId});
+                        let result = await changeCartNum(this.userInfo.token, goodsId, 'reduce');
+                        // console.log(result);
+                        if(result.success_code === 200){ // 修改成功
+                            this.REDUCE_CART({goodsId});
+                        }else {
+                            Toast({
+                                message: '出了点小问题哟~',
+                                duration: 500
+                            });
+                        }
 
                     }).catch(() => { // 点击了取消
                         // do nothing
@@ -143,60 +141,66 @@
             },
             // 2. 增加商品
             async addToCart(goodsId, goodsName, smallImage, goodsPrice){
-//                let result = await changeCartNum(this.userInfo.token, goodsId, 'add');
-//                // console.log(result);
-//                if(result.success_code === 200){ // 修改成功
-//                    this.ADD_GOODS({
-//                        goodsId,
-//                        goodsName,
-//                        smallImage,
-//                        goodsPrice
-//                    });
-//                }else {
-//                    Toast({
-//                        message: '出了点小问题哟~',
-//                        duration: 500
-//                    });
-//                }
-                this.ADD_GOODS({
-                    goodsId,
-                    goodsName,
-                    smallImage,
-                    goodsPrice
-                });
+                let result = await changeCartNum(this.userInfo.token, goodsId, 'add');
+                // console.log(result);
+                if(result.success_code === 200){ // 修改成功
+                    this.ADD_GOODS({
+                        goodsId,
+                        goodsName,
+                        smallImage,
+                        goodsPrice
+                    });
+                }else {
+                    Toast({
+                        message: '出了点小问题哟~',
+                        duration: 500
+                    });
+                }
+
             },
             // 3. 单个商品选中和取消选中
             async singerGoodsSelected(goodsId){
-//                let result = await singerGoodsSelect(this.userInfo.token, goodsId);
-//                if(result.success_code === 200){
+                let result = await singerGoodsSelect(this.userInfo.token, goodsId);
+                if(result.success_code === 200){
                     this.SELECTED_SINGER_GOODS({goodsId});
-//                }
+                }
             },
             // 4. 全选和取消全选
             async selectedAll(isSelected){
-//                let result = await allGoodsSelect(this.userInfo.token, isSelected);
-//                if(result.success_code === 200){
+                let result = await allGoodsSelect(this.userInfo.token, isSelected);
+                if(result.success_code === 200){
                     this.SELECTED_All_GOODS({isSelected});
-//                }
+                }
             },
             clearCart(){
                 Dialog.confirm({
                     title: '小撩温馨提示',
                     message: '确定清空所有商品吗?'
                 }).then(async () => {
-//                    let result = await clearAllCart(this.userInfo.token);
-//                    // console.log(result);
-//                    if(result.success_code === 200){ // 删除成功
+                    let result = await clearAllCart(this.userInfo.token);
+                    // console.log(result);
+                    if(result.success_code === 200){ // 删除成功
                         this.CLEAR_CART();
-//                    }else {
-//                        Toast({
-//                            message: '出了点小问题哟~',
-//                            duration: 500
-//                        });
-//                    }
+                    }else {
+                        Toast({
+                            message: '出了点小问题哟~',
+                            duration: 500
+                        });
+                    }
                 }).catch(() => { // 点击了取消
                     // do nothing
                 });
+            },
+            // 6. 去支付
+            toPay(){
+                if(this.totalPrice > 0){
+                    this.$router.push('/confirmOrder');
+                }else {
+                    Toast({
+                        message: '请先选择商品后再结算~',
+                        duration: 1000
+                    })
+                }
             }
         },
         components: {
