@@ -11,6 +11,7 @@ const Cart = ()=> import('./../views/cart/Cart.vue');
 const Category = ()=> import('./../views/category/Category.vue');
 const Mine = ()=> import('./../views/mine/Mine.vue');
 const UserCenter = ()=> import('./../views/mine/children/UserCenter.vue');
+const MineOrder = ()=> import('./../views/mine/children/MineOrder');
 
 const Order = ()=> import('./../views/order/Order.vue');
 const OrderDetail = ()=> import('./../views/order/children/OrderDetail.vue');
@@ -35,7 +36,9 @@ export default new Router({
                 {path:'cart',name:'cart',component:Cart},
                 {path:'mine',name:'mine',component:Mine,
                     children:[
-                        {path:'userCenter',name:'userCenter',component:UserCenter}
+                        {path:'userCenter',name:'userCenter',component:UserCenter},
+                        {path: 'mineOrder', component: MineOrder} // 我的订单
+
                     ]
                 }
             ]
