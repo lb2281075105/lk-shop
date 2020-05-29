@@ -25,6 +25,9 @@ import '@/config/rem'
 import '@/config/filters'
 
 
+// 8. 配置二维码插件
+import VueQriously from 'vue-qriously'
+Vue.use(VueQriously);
 
 
 

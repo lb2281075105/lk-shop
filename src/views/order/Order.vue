@@ -77,6 +77,7 @@
     import Moment from 'moment'
     import {mapState} from 'vuex'
     import {Toast} from 'vant'
+
     import {postOrder, orderPaySuccess, getWXCode, queryPayStatus, getAllSelectedGoods, delAllSelectedGoods} from './../../service/api/index'
 
     export default {
